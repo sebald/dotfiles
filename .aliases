@@ -153,5 +153,7 @@ command -v npm > /dev/null && alias npme="npm --registry http://registry.npmjs.e
 
 # Create dir and cd into it
 function mkd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
-# alias md="mkdir -p '$@'' && eval cd '\"\$$#\"';"
+
+# Create a file and open it with default (edit alias) editor
+function tf () { touch "$@" && eval edit "\"\$$#\""; }
 
