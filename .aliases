@@ -7,15 +7,19 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias d="cd ~/Documents/Dropbox"
+alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
 alias g="git"
 alias h="history"
 alias j="jobs"
-alias cc="cd ~/Projects/chemocompile/ui"
 
+# Chemocompile
+alias cc="cd ~/Projects/chemocompile/ui"
+function ccspec () { cd ~/Projects/chemocompile-specification/ && git pull && open http://localhost:4000/ && jekyll serve; }
+
+alias subl="open /Applications/Sublime\ Text.app"
 alias edit="subl"
 alias github="open /Applications/GitHub.app"
 
