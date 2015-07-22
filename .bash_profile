@@ -2,6 +2,15 @@
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/Users/$USER/.node/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH"
+
+#Boot2Docker
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/sebastiansebald/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
+# Raise max files limit ...
+ ulimit -n 65536 65536
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
