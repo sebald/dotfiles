@@ -14,14 +14,12 @@ alias p="cd ~/Projects"
 alias g="git"
 alias h="history"
 alias j="jobs"
-
-# Chemocompile
-alias cc="cd ~/Projects/chemocompile/ui"
-function ccspec () { cd ~/Projects/chemocompile-specification/ && git pull && open http://localhost:4000/ && jekyll serve; }
+alias npmcu="npm-check-updates"
 
 alias subl="open -a /Applications/Sublime\ Text.app"
-alias edit="subl"
 alias github="open /Applications/GitHub.app"
+alias code="open -a /Applications/Visual\ Studio\ Code.app/"
+alias edit="code"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -161,4 +159,3 @@ function mkd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
 # Create a file and open it with default (edit alias) editor
 function tf () { touch "$@" && eval edit "\"\$$#\""; }
-
