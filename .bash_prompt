@@ -5,6 +5,14 @@
 # Shell prompt based on the Nova theme (http://www.trevordmiller.com/nova/).
 # Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
 
+# set 256 color profile where possible
+if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+    export TERM=gnome-256color
+elif infocmp xterm-256color >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
+
 prompt_git() {
     local s=""
     local branchName=""
@@ -120,7 +128,7 @@ set_prompts() {
 
     # set the terminal title to the current working directory
     PS1="\[\033]0;\w\007\]"
-
+    PS1+="\n" # newline
     PS1+="\[$userStyle\]\u" # username
     PS1+="\[$reset$white\]@"
     PS1+="\[$hostStyle\]\h" # host
