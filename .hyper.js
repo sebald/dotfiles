@@ -25,7 +25,15 @@ module.exports = {
     css: '',
 
     // custom css to embed in the terminal window
-    termCSS: '',
+    termCSS: `
+      x-screen a {
+        color: #6a7d89;
+      }
+
+      x-screen a.hover {
+        text-decoration: underline;
+      }
+    `,
 
     // custom padding (css format, i.e.: `top right bottom left`)
     padding: '17px',
