@@ -16,10 +16,43 @@ alias h="history"
 alias j="jobs"
 alias npmcu="npm-check-updates"
 
-alias subl="open -a /Applications/Sublime\ Text.app"
-alias github="open /Applications/GitHub.app"
-alias code="open -a /Applications/Visual\ Studio\ Code.app/"
 alias edit="code"
+alias ntw="npm test -- --watch"
+
+# Docker (echo -n <emoji> | hexdump)
+function docker-stop () {
+	if [[ $(docker ps -a -q) ]]; then
+		docker rm $(docker ps -a -q)
+		echo -e "\xf0\x9f\x93\xa6  ➡ \xf0\x9f\x92\xa5  All stoped containers removed!"
+	else
+		echo -e "\xf0\x9f\x91\x8c  Nothing to stop!"
+	fi
+}
+function docker-none () {
+	if [[ $(docker images | grep "^<none>" | awk "{print $3}") ]]; then
+		docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+		echo -e "\xf0\x9f\x96\xbc  ➡ \xf0\x9f\x92\xa5  Cleaned <none> images!"
+	else
+		echo -e "\xf0\x9f\x91\x8c  Nothing to clean!"
+	fi
+}
+function docker-killall () {
+	if [[ $(docker ps -q) ]]; then
+		docker kill $(docker ps -q)
+		echo -e "\xe2\x98\xa0  All active containers killed!"
+	else
+		echo -e "\xf0\x9f\x91\x8c  Nothing to kill!"
+	fi
+}
+function docker-clean () {
+	docker-stop
+	docker-none
+	echo -e "\xf0\x9f\x90\x8b \xf0\x9f\x90\x8b \xf0\x9f\x90\x8b  Done! \xf0\x9f\x90\x8b \xf0\x9f\x90\x8b \xf0\x9f\x90\x8b"
+}
+function docker-kc () {
+	docker-killall
+	docker-clean
+}
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -159,3 +192,6 @@ function mkd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
 # Create a file and open it with default (edit alias) editor
 function tf () { touch "$@" && eval edit "\"\$$#\""; }
+
+# Toggle Proxy
+function proxy () { sh ~/bin/proxy_toggle.sh "$@"; }

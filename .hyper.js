@@ -1,7 +1,7 @@
 module.exports = {
   config: {
     // default font size in pixels for all tabs
-    fontSize: 15,
+    fontSize: 16,
 
     // font family with optional fallbacks
     fontFamily: 'Hack, Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
@@ -25,15 +25,7 @@ module.exports = {
     css: '',
 
     // custom css to embed in the terminal window
-    termCSS: `
-      x-screen a {
-        color: #6a7d89;
-      }
-
-      x-screen a.hover {
-        text-decoration: underline;
-      }
-    `,
+    termCSS: ``,
 
     // custom padding (css format, i.e.: `top right bottom left`)
     padding: '17px',
@@ -75,12 +67,16 @@ module.exports = {
     bell: 'SOUND',
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: false,
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
 
     // for advanced config flags please refer to https://hyper.is/#cfg
+    hyperStatusLine: {
+        fontSize: 13,
+        fontFamily: 'Fira Code'
+      }
   },
 
   // a list of plugins to fetch and install from npm
@@ -90,12 +86,12 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    // 'hyperpower',
-    'nova-hyperterm',
-    'hyper-blink',
-    'hyperterm-tab-icons',
+    'hyper-statusline',
+    'hyperterm-close-on-left',
     'hyperlinks',
-    'hyperterm-paste'
+    'hyperterm-paste',
+    // 'hyper-dark-nova-theme',
+    'hyperterm-atom-dark'
   ],
 
   // in development, you can create a directory under
