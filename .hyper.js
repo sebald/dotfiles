@@ -49,7 +49,7 @@ module.exports = {
       lightBlue: '#0066ff',
       lightMagenta: '#cc00ff',
       lightCyan: '#00ffff',
-      lightWhite: '#ffffff'
+      lightWhite: '#ffffff',
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -73,10 +73,6 @@ module.exports = {
     // bellSoundURL: 'http://example.com/bell.mp3',
 
     // for advanced config flags please refer to https://hyper.is/#cfg
-    hyperStatusLine: {
-        fontSize: 13,
-        fontFamily: 'Fira Code'
-      }
   },
 
   // a list of plugins to fetch and install from npm
@@ -86,16 +82,15 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    'hyper-statusline',
     'hyperterm-close-on-left',
     'hyperlinks',
     'hyperterm-paste',
     // 'hyper-dark-nova-theme',
-    'hyperterm-atom-dark'
+    'hyperterm-atom-dark',
   ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: []
+  localPlugins: [],
 };
