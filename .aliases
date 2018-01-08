@@ -68,23 +68,23 @@ function update_branch () {
   reset=$(tput sgr0)
 
   if [ -z $1 ]; then
-    BRANCH="-"
+    BRANCH=$(get_current_branch)
   else
     BRANCH=$1
   fi
-
+echo ${BRANCH}
   if [ -z $2 ]; then
     MAIN="development"
   else
     MAIN=$2
   fi
 
-  if [[ ${BRANCH} != "-" && !($(branch_exists BRANCH)) ]]; then
+  if [[ !($(branch_exists ${BRANCH})) ]]; then
     echo -e "\n\xf0\x9f\x92\x80  Branch ${bold}${BRANCH}${reset} does not exist! Please create it first."
     return
   fi
 
-  echo -e "\n\xf0\x9f\x8c\xb1  Start updating branch ${bold}$(get_current_branch)${reset}"
+  echo -e "\n\xf0\x9f\x8c\xb1  Start updating branch ${bold}${BRANCH}${reset}"
 
   if [[ $(get_current_branch) != MAIN ]]; then
     echo -e "\n\xf0\x9f\x94\x80  Switching to ${bold}${MAIN}${reset}"
@@ -97,7 +97,7 @@ function update_branch () {
   echo -e "\n\xf0\x9f\x94\x80  Switching to ${bold}${BRANCH}${reset}"
   git checkout ${BRANCH}
 
-  echo -e "\n\xf0\x9f\x91\xbe  Fast-forward merging ${bold}${MAIN}${reset} ➡ ${bold}$(get_current_branch)${reset}"
+  echo -e "\n\xf0\x9f\x91\xbe  Fast-forward merging ${bold}${MAIN}${reset} ➡ ${bold}${BRANCH}${reset}"
   git merge ${MAIN}
 
   # test if no conflicts
