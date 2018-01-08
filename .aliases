@@ -101,10 +101,10 @@ echo ${BRANCH}
   git merge ${MAIN}
 
   # test if no conflicts
-  if [[ $(gdiff) ]]; then
+  if [[ $(git diff --name-only --diff-filter=U) ]]; then
     echo -e "\n\xf0\x9f\x92\xa5  Repo has conflicts. Please solve them and then do a ${italic}git push${reset}."
-  # test if is clean
-  elif [[ -z $(is_git_clean) ]]; then
+  # test if there are changes
+  elif [[ -z $(git diff origin/improve-taxonomy-in-api --name-only) ]]; then
     echo -e "\n\xf0\x9f\x92\xab  Repo is clean, no need to push updates!"
   else 
     echo -e "\n\xf0\x9f\x94\xbc  Pushing updates!"
