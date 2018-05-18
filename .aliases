@@ -34,6 +34,10 @@ alias gcol="g checkout -"
 
 alias gmd="g merge development"
 
+function git_prune () {
+  git fetch -p && for branch in `git branch -vv --no-color | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
+}
+
 # alias gu="gcod && g pull && gcol && gmd"
 alias gc="g clean -f"
 
@@ -42,6 +46,34 @@ alias gg="g log --graph --pretty=format:'%C(bold)%h%Creset%C(magenta)%d%Creset %
 alias ggs="gg --stat"
 alias gsl="g shortlog -sn"
 alias gwc="g whatchanged"
+alias glog="git --no-pager log --pretty=oneline --decorate"
+
+# Git Stats
+function get_users () {
+  git log --format='%aN' | sort -u
+}
+
+function get_user_stats () {
+  # How to add optional args: https://stackoverflow.com/questions/13206311/bash-function-with-optional-arguments-and-missing-logic
+  CMD=(git log --shortstat --author="$1")
+  
+  if [ ! -z "$2" ]; then
+    CMD+=( --since="$2")
+  fi
+
+  if [ ! -z "$3" ]; then
+    CMD+=( -- $3)
+  fi
+
+  "${CMD[@]}" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed: ", files, "lines inserted: ", inserted, "lines deleted: ", deleted }'
+}
+
+# function get_stats () {
+#   git log --format='%aN' | sort -u | awk '{get_user_stats("Sebastian Sebald")}'
+#   #USERS=$(get_users)
+  
+#   # for u in ${USERS}; do echo "$u"; done
+# }
 
 # List files with conflicts
 alias gdiff="git diff --name-only --diff-filter=U"
@@ -72,7 +104,7 @@ function update_branch () {
   else
     BRANCH=$1
   fi
-echo ${BRANCH}
+
   if [ -z $2 ]; then
     MAIN="development"
   else
@@ -104,8 +136,8 @@ echo ${BRANCH}
   if [[ $(git diff --name-only --diff-filter=U) ]]; then
     echo -e "\n\xf0\x9f\x92\xa5  Repo has conflicts. Please solve them and then do a ${italic}git push${reset}."
   # test if there are changes
-  elif [[ -z $(git diff origin/improve-taxonomy-in-api --name-only) ]]; then
-    echo -e "\n\xf0\x9f\x92\xab  Repo is clean, no need to push updates!"
+  #elif [[ -z $(git diff --name-only) ]]; then
+  #  echo -e "\n\xf0\x9f\x92\xab  Repo is clean, no need to push updates!"
   else 
     echo -e "\n\xf0\x9f\x94\xbc  Pushing updates!"
     git push
