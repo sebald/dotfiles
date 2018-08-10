@@ -85,7 +85,6 @@ module.exports = {
     'hyperterm-close-on-left',
     'hyperlinks',
     'hyperterm-paste',
-    // 'hyper-dark-nova-theme',
     'hyperterm-atom-dark',
   ],
 

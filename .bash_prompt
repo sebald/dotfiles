@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
-
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
   export TERM='gnome-256color';
 elif infocmp xterm-256color >/dev/null 2>&1; then
@@ -11,62 +9,67 @@ fi;
 # colors (https://npm.runkit.com/color2xterm)
 bold=$(tput bold)
 reset=$(tput sgr0)
+white=$(tput setaf 253)
 
+blue=$(tput setaf 75) # hex: 6faaf2
 green=$(tput setaf 114) # hex: 97c475
 purple=$(tput setaf 176) # hex: c775df
 yellow=$(tput setaf 222) # hex: d8bb7e
 gray=$(tput setaf 102) # hex 7f848d
 
-
-# stolen from: https://github.com/mathiasbynens/dotfiles
-prompt_git() {
-  local dirty=''
-  local branchName=''
-
-  # Check if the current directory is in a Git repository.
-  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
-
-    # check if the current directory is in .git before running git checks
-    if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
-
-      # Ensure the index is up to date.
-      git update-index --really-refresh -q &>/dev/null;
-
-      # Check for uncommitted changes in the index.
-      if ! $(git diff --quiet --ignore-submodules --cached); then
-        dirty='*';
-      # Check for unstaged changes.
-      elif ! $(git diff-files --quiet --ignore-submodules --); then
-        dirty='*';
-      # Check for untracked files.
-      elif [ -n "$(git ls-files --others --exclude-standard)" ]; then
-        dirty='*';
-      fi;
-
-    fi;
-
-    # Get the short symbolic ref.
-    # If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
-    # Otherwise, just give up.
-    branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
-      git rev-parse --short HEAD 2> /dev/null || \
-      echo '(unknown)')";
-
-    echo -e " ${1}${branchName}${2}${dirty}";
-
-  else
-    return;
-  fi;
+# get current branch in git repo
+function parse_git_branch() {
+	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+	if [ ! "${BRANCH}" == "" ]
+	then
+		STAT=`parse_git_dirty`
+		echo " [${BRANCH} ${STAT}]"
+	else
+		echo ""
+	fi
 }
 
+# get current status of git repo
+function parse_git_dirty {
+	status=`git status 2>&1 | tee`
+	dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+	untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+	ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+	newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+	renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+	deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+	bits=''
+	if [ "${renamed}" == "0" ]; then
+		bits=">${bits}"
+	fi
+	if [ "${ahead}" == "0" ]; then
+		bits="*${bits}"
+	fi
+	if [ "${newfile}" == "0" ]; then
+		bits="+${bits}"
+	fi
+	if [ "${untracked}" == "0" ]; then
+		bits="?${bits}"
+	fi
+	if [ "${deleted}" == "0" ]; then
+		bits="x${bits}"
+	fi
+	if [ "${dirty}" == "0" ]; then
+		bits="!${bits}"
+	fi
+	if [ ! "${bits}" == "" ]; then
+		echo "${bits}"
+	else
+		echo ""
+	fi
+}
 
 # set the terminal title and prompt.
 PS1="\[\033]0;\w\007\]"
-PS1+="\n" # newline
-PS1+="\e[3m\[$green\]\w\e[0m" # working directory
-PS1+="\$(prompt_git \"$gray\" \"$gray\")" # git repository details
 PS1+="\n"
-PS1+="\[$reset$purple\]${promptSymbol:-❯} \[$reset\]" # $ (and reset color)
+PS1+="\[$blue\]\w\[$gray\]\`parse_git_branch\`"
+PS1+="\n"
+PS1+="\[$reset$purple\]${promptSymbol:-❯} \[$white\]"
 export PS1;
 
 PS2="\[${yellow}\]→ \[${reset}\]";
