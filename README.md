@@ -6,10 +6,11 @@ My `dotfiles` inspired by [Mathias Bynens](https://github.com/mathiasbynens/dotf
 
 1. Clone this repository
 1. Run `./install.sh`
-  - This will copy dotfiles to ``
-  - Install or update [`n`](https://github.com/tj/n) (node version manager)
-  - Install or update [Homebrew](https://brew.sh/index_de)
-  - Install the latest node version
+    - This will copy dotfiles to ``
+    - Install or update [`n`](https://github.com/tj/n) (node version manager)
+    - Install or update [Homebrew](https://brew.sh/index_de)
+    - Install the latest node version
+1. Run `./brew.sh`
 
 ### Specify the `$PATH`
 
