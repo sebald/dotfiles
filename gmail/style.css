@@ -1,0 +1,16 @@
+body {
+  padding-top: 28px;
+}
+
+body > div:nth-child(18):before {
+  display:block;
+  content: '';
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  
+  height: 28px;
+  -webkit-app-region: drag;
+}

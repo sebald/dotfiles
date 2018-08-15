@@ -4,7 +4,7 @@
 #             Update            #
 #-------------------------------#
 echo "Updating repo...";
-git pull origin master;
+# git pull origin master;
 
 
 #-------------------------------#
@@ -46,9 +46,13 @@ function installOrUpdate() {
 }
 
 installOrUpdate "n" "curl -L https://git.io/n-install | bash" "n-update";
-installOrUpdate "brew" "ruby -e `$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)`" "brew update && brew upgrade -all";
+installOrUpdate "brew" "/usr/bin/ruby -e `$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)`" "brew update && brew upgrade -all";
 
 unset installOrUpdate;
 
 # Install latest node and run brew
 n latest
+
+# Install GMail app
+cd gmail
+sh install.sh
