@@ -52,5 +52,20 @@ brew install yarn --without-node # Node is installed via n (https://github.com/t
 brew install awscli
 brew install amazon-ecs-cli
 
+# Install GUI applications via cask
+brew cask install google-chrome
+brew cask install hyper
+brew cask install visual-studio-code
+brew cask install docker-edge
+brew cask install spotify
+
+# Install Fire Font
+brew tap caskroom/fonts
+brew cask install \
+  font-fira-code \
+  font-fira-mono \
+  font-fira-mono-for-powerline \
+  font-fira-sans
+
 # Remove outdated versions from the cellar.
 brew cleanup
