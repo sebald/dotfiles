@@ -13,9 +13,11 @@ echo "Updating repo...";
 function doIt() {
   echo "Syncing dotiles..."
   rsync --exclude ".git/" \
+    --exclude "gmail/" \
     --exclude ".DS_Store" \
-    --exclude ".osx" \
+    --exclude ".macos" \
     --exclude "install.sh" \
+    --exclude "brew.sh" \
     --exclude "README.md" \
     --exclude "LICENSE" \
     -avh --no-perms . ~;
