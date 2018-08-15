@@ -3,6 +3,7 @@
 #-------------------------------#
 #             Update            #
 #-------------------------------#
+echo "Updating repo...";
 git pull origin master;
 
 
@@ -10,6 +11,7 @@ git pull origin master;
 #         Copy Dotfiles         #
 #-------------------------------#
 function doIt() {
+  echo "Syncing dotiles..."
   rsync --exclude ".git/" \
     --exclude ".DS_Store" \
     --exclude ".osx" \
@@ -34,6 +36,7 @@ unset doIt;
 #-------------------------------#
 #  Install additional programs  #
 #-------------------------------#
+echo "Installing programs..."
 function installOrUpdate() {
   if [[ !($(which $1)) ]]; then
     eval "$2"
@@ -49,4 +52,3 @@ unset installOrUpdate;
 
 # Install latest node and run brew
 n latest
-
