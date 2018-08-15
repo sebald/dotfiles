@@ -52,8 +52,9 @@ installOrUpdate "brew" "/usr/bin/ruby -e `$(curl -fsSL https://raw.githubusercon
 
 unset installOrUpdate;
 
-# Install latest node and run brew
+# Install latest node
 n latest
+sudo codesign --force --sign - $(which node) # Context: https://github.com/tj/n/issues/394
 
 # Install GMail app
 cd gmail
