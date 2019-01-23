@@ -30,6 +30,9 @@ brew install gnu-sed --with-default-names
 brew install bash
 # brew install bash-completion2
 
+# Install `z` (better cd command, https://github.com/rupa/z)
+brew install z
+
 # Install `wget` with IRI support.
 brew install wget --with-iri
 
