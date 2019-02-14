@@ -85,7 +85,7 @@ module.exports = {
     'hyperterm-close-on-left',
     'hyperlinks',
     'hyperterm-paste',
-    'hyperterm-atom-dark',
+    'hyper-night-owl',
   ],
 
   // in development, you can create a directory under
