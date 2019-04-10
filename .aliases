@@ -78,12 +78,16 @@ alias gdiff="git diff --name-only --diff-filter=U"
 
 # Squash commits on current branch and create one commit
 function smoosh () {
+  if [ -n "$(git status --porcelain)" ]; then
+    echo "Your git status is not clean. Aborting.";
+    exit 1;
+  fi
+
  git reset --soft HEAD~$(git rev-list --count HEAD ^"${1:-master}")
  git add -A
  git commit
  git push --force-with-lease
 }
-
 
 #-------------------------------#
 #              Docker           #
