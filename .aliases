@@ -59,6 +59,8 @@ alias gc="git commit"
 alias gco="git checkout"
 alias gcap="git commit --amend && git push origin HEAD --force-with-lease"
 
+alias gs="git s"
+
 function git_prune () {
   git fetch -p && for branch in `git branch -vv --no-color | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
 }
@@ -73,6 +75,14 @@ alias glog="git --no-pager log --pretty=oneline --decorate"
 
 # List files with conflicts
 alias gdiff="git diff --name-only --diff-filter=U"
+
+# Squash commits on current branch and create one commit
+function smoosh () {
+ git reset --soft HEAD~$(git rev-list --count HEAD ^"${1:-master}")
+ git add -A
+ git commit
+ git push --force-with-lease
+}
 
 
 #-------------------------------#
